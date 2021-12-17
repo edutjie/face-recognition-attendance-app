@@ -6,4 +6,5 @@
   <li>Pillow</li>
   <li>SQLite3</li>
   <li>Numpy</li>
+  <li>tkinter</li>
 </ul>
