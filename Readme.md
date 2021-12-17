@@ -1,0 +1,1 @@
+<h1>Face Recognition Attendance App</h1>
