@@ -57,7 +57,7 @@ This is a Python-based Face Recognition Attendance application that was made usi
 <h4>How to run and use the app?</h4>
 <ol>
   <li>Run <code>python -m pip install -r requirements.txt</code> to install prerequisites</li>
-  <li>Go inside the src directory and open main.py.</li>
+  <li>Go inside the src directory and open main.py or run <code>python src/main.py</code>.</li>
   <li>If you don't have an account yet, register by clicking the Sign Up button and fill the form and it will register your face also.</li>
   <li>Log in, fill the log in form. After that, the app will scan your face.</li>
   <li>After you've logged in, you can submit attendance or see the attendance list</li>
