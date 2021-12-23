@@ -201,7 +201,7 @@ def scan_face(username, cam):
             )
 
         # display the frame result
-        cv2.imshow("frame", frame)
+        cv2.imshow("Scanning Face...", frame)
 
         # stop if it scans for more than 50 seconds
         end = time.time()
