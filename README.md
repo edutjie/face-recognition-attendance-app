@@ -53,6 +53,7 @@ This is a Python-based Face Recognition Attendance application that was made usi
   <li>To train the faces, first we have to save the region of interest in our local directory (I set it to <i>images/[username]/</i>) and then <i>train.py</i> will train it using OpenCV LBPHFaceRecognizer and then export it to xml file (mine <i>face-train.xml</i>).</li>
   <li>To scan the face, we have to read the <i>face-train.xml</i> file and then predict the region of interest with it. Using the LBPHFaceRecognizer prediction we can get the confidence of the prediction.</li>
   <li>The confidence is the percentage we can get to tell that the face is recognized or not.</li>
+  <img src="https://user-images.githubusercontent.com/69960893/147265224-aec2f66e-e5c5-4e62-b853-c0dacdc7b804.png" />
 </ul>
 
 <h4>Files:</h4>
