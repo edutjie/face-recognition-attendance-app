@@ -19,19 +19,20 @@ class Login(tk.Toplevel):
         super().__init__(master)
         self.master = master
         self.title("Log in")
-        self.font_settings = Font(family="Helvetica", size=12, weight="bold")
+
+        # create widget
         self.create_widget()
 
     def create_widget(self):
-        self.label = tk.Label(self, text="LOG IN", font=self.font_settings).grid(
+        self.label = tk.Label(self, text="LOG IN", font=self.master.font_settings).grid(
             row=0, column=0, columnspan=2, padx=10, pady=5
         )
 
         # fields
-        self.label = tk.Label(self, text="Username  :", font=self.font_settings).grid(
+        self.label = tk.Label(self, text="Username  :", font=self.master.font_settings).grid(
             row=1, column=0, padx=10, pady=5
         )
-        self.label = tk.Label(self, text="Password  :", font=self.font_settings).grid(
+        self.label = tk.Label(self, text="Password  :", font=self.master.font_settings).grid(
             row=2, column=0, padx=10, pady=5
         )
 
@@ -47,14 +48,14 @@ class Login(tk.Toplevel):
 
         # cancel button
         self.cancel_btn = tk.Button(
-            self, text="Cancel", font=self.font_settings, command=self.destroy, fg="red"
+            self, text="Cancel", font=self.master.font_settings, command=self.destroy, fg="red"
         ).grid(row=3, column=0, padx=10, pady=5)
 
         # log in button
         self.login_btn = tk.Button(
             self,
             text="Log In",
-            font=self.font_settings,
+            font=self.master.font_settings,
             command=self.validate_user,
             fg="green",
         ).grid(row=3, column=1, padx=10, pady=5)
@@ -112,7 +113,7 @@ class Login(tk.Toplevel):
             self.scan_face(username)
 
     def scan_face(self, username):
-        is_success = face.scan_face(username)
+        is_success = face.scan_face(username, App.get_cam(self.master))
         if is_success:
             tkmsg.showinfo(
                 title="LoginSuccess",
@@ -133,23 +134,25 @@ class Login(tk.Toplevel):
 class Signup(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
-        self.font_settings = Font(family="Helvetica", size=12, weight="bold")
+        self.master = master
+
+        # create widget
         self.create_widget()
 
     def create_widget(self):
-        self.label = tk.Label(self, text="SIGN UP", font=self.font_settings).grid(
+        self.label = tk.Label(self, text="SIGN UP", font=self.master.font_settings).grid(
             row=0, column=0, columnspan=2, padx=10, pady=5
         )
 
         # fields
         self.label = tk.Label(
-            self, text="Username                  :", font=self.font_settings
+            self, text="Username                  :", font=self.master.font_settings
         ).grid(row=1, column=0, padx=10, pady=5)
         self.label = tk.Label(
-            self, text="Password                  :", font=self.font_settings
+            self, text="Password                  :", font=self.master.font_settings
         ).grid(row=2, column=0, padx=10, pady=5)
         self.label = tk.Label(
-            self, text="Confirm Password  :", font=self.font_settings
+            self, text="Confirm Password  :", font=self.master.font_settings
         ).grid(row=3, column=0, padx=10, pady=5)
 
         # entry
@@ -167,14 +170,14 @@ class Signup(tk.Toplevel):
 
         # cancel button
         self.cancel_btn = tk.Button(
-            self, text="Cancel", font=self.font_settings, command=self.destroy, fg="red"
+            self, text="Cancel", font=self.master.font_settings, command=self.destroy, fg="red"
         ).grid(row=4, column=0, padx=10, pady=5)
 
         # log in button
         self.login_btn = tk.Button(
             self,
             text="Sign Up",
-            font=self.font_settings,
+            font=self.master.font_settings,
             command=self.validate_input,
             fg="green",
         ).grid(row=4, column=1, padx=10, pady=5)
@@ -272,7 +275,7 @@ class Signup(tk.Toplevel):
             for id in cur.execute("SELECT id FROM users WHERE username = ?", [username])
         ][0]
         # take 200 pictures of the user
-        face.take_pictures(username)
+        face.take_pictures(username, App.get_cam(self.master))
         # train model
         train.train_face()
 
@@ -280,12 +283,12 @@ class Signup(tk.Toplevel):
 class AttendanceList(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
-        self.font_settings = Font(family="Helvetica", size=12, weight="bold")
+        self.master = master
         self.create_widget()
 
     def create_widget(self):
         self.label = tk.Label(
-            self, text="ATTENDANCE LIST", font=self.font_settings
+            self, text="ATTENDANCE LIST", font=self.master.font_settings
         ).pack(padx=10, pady=5)
 
         # scrollbar
@@ -319,12 +322,40 @@ class AttendanceList(tk.Toplevel):
         table.pack()
 
 
+class SelectCam(tk.Toplevel):
+    def __init__(self, master=None):
+        super().__init__(master)
+        ttk.Label(self, text="Select CAM :", font=("Helvetica", 10)).pack(
+            padx=10, pady=5
+        )
+
+        self.select_cam = ttk.Combobox(self, width=3, textvariable=master.cam)
+
+        # adding combobox drop down list
+        self.select_cam["values"] = master.available_cam
+        self.select_cam.pack(padx=10, pady=5)
+
+        # shows 0 as a default value
+        self.select_cam.current(0)
+
+        self.ok_btn = tk.Button(
+            self, text="OK", font=master.font_settings, command=self.destroy, fg="green"
+        ).pack(padx=10, pady=5)
+
+
 class App(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
         self.font_settings = Font(family="Helvetica", size=12, weight="bold")
+
+        # set up database
         self.setup_db()
+
+        # get the list of available cam
+        self.available_cam = face.available_cam()
+
+        # create log in widget
         self.create_log_widget()
 
     def create_log_widget(self):
@@ -338,6 +369,14 @@ class App(tk.Frame):
             text="Sign up", font=self.font_settings, command=self.signup
         )
         self.signup_btn.pack(padx=10, pady=5)
+
+        # select cam drop down
+        self.cam = tk.StringVar()
+        self.cam.set(self.available_cam[0])
+        self.select_cam_btn = tk.Button(
+            text="Select Camera", font=self.font_settings, command=self.select_cam
+        )
+        self.select_cam_btn.pack(padx=10, pady=5)
 
     def create_logged_widget(self, username):
         self.clear_log_widget()
@@ -394,6 +433,12 @@ class App(tk.Frame):
     def signup(self):
         Signup(self)
 
+    def select_cam(self):
+        SelectCam(self)
+
+    def get_cam(self):
+        return self.cam.get()
+
     def logout(self):
         self.clear_logged_widget()
         self.username = ""
@@ -416,12 +461,13 @@ class App(tk.Frame):
         )
 
     def attendance_list(self):
-        AttendanceList()
+        AttendanceList(self)
 
     def clear_log_widget(self):
         self.label.forget()
         self.login_btn.forget()
         self.signup_btn.forget()
+        self.select_cam_btn.forget()
 
     def clear_logged_widget(self):
         self.attendance_status_btn.destroy()
@@ -433,6 +479,6 @@ class App(tk.Frame):
 if __name__ == "__main__":
     app = App()
     app.master.title("FACE RECOGNITION ATTENDANCE APP")
-    app.master.geometry("250x175")
+    app.master.geometry("300x200")
     app.master.mainloop()
     con.close()

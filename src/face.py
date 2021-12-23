@@ -23,9 +23,9 @@ text_color = (0, 255, 0)
 text_stroke = 2
 
 
-def take_pictures(username):
+def take_pictures(username, cam):
     # select webcam
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(int(cam))
     # count how many pictures we taken
     count = 0
     latest_filename = 0
@@ -132,9 +132,9 @@ def predict(frame, roi_gray, coordinates: tuple, labels, scanning, username):
     return scanning
 
 
-def scan_face(username):
+def scan_face(username, cam):
     # select webcam
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(int(cam))
 
     # get the user id
     cur = con.cursor()
@@ -222,6 +222,19 @@ def scan_face(username):
 
     return is_success
 
+def available_cam():
+    index = 0
+    arr = []
+    while True:
+        cap = cv2.VideoCapture(index)
+        if not cap.read()[0]:
+            break
+        else :
+            arr.append(index)
+            cap.release()
+            index += 1
+    return arr
 
 if __name__ == "__main__":
+    print(available_cam())
     ...
