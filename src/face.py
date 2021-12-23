@@ -143,7 +143,7 @@ def scan_face(username, cam):
     }
 
     # read recognizer
-    recognizer.read(os.path.join(os.path.dirname(BASE_DIR), "face-trainner.xml"))
+    recognizer.read(os.path.join(os.path.dirname(BASE_DIR), "face-train.xml"))
 
     scanning, is_success = 0, 0
 

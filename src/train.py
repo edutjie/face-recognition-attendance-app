@@ -61,7 +61,7 @@ def train_face():
                     y_labels.append(user_id)
 
     recognizer.train(x_train, np.array(y_labels))
-    recognizer.save("face-trainner.xml")
+    recognizer.save("face-train.xml")
 
 
 if __name__ == "__main__":
