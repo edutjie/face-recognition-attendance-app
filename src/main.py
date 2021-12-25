@@ -29,12 +29,12 @@ class Login(tk.Toplevel):
         )
 
         # fields
-        self.label = tk.Label(self, text="Username  :", font=self.master.font_settings).grid(
-            row=1, column=0, padx=10, pady=5
-        )
-        self.label = tk.Label(self, text="Password  :", font=self.master.font_settings).grid(
-            row=2, column=0, padx=10, pady=5
-        )
+        self.label = tk.Label(
+            self, text="Username  :", font=self.master.font_settings
+        ).grid(row=1, column=0, padx=10, pady=5)
+        self.label = tk.Label(
+            self, text="Password  :", font=self.master.font_settings
+        ).grid(row=2, column=0, padx=10, pady=5)
 
         # entry
         self.username = tk.StringVar()
@@ -48,7 +48,11 @@ class Login(tk.Toplevel):
 
         # cancel button
         self.cancel_btn = tk.Button(
-            self, text="Cancel", font=self.master.font_settings, command=self.destroy, fg="red"
+            self,
+            text="Cancel",
+            font=self.master.font_settings,
+            command=self.destroy,
+            fg="red",
         ).grid(row=3, column=0, padx=10, pady=5)
 
         # log in button
@@ -140,9 +144,9 @@ class Signup(tk.Toplevel):
         self.create_widget()
 
     def create_widget(self):
-        self.label = tk.Label(self, text="SIGN UP", font=self.master.font_settings).grid(
-            row=0, column=0, columnspan=2, padx=10, pady=5
-        )
+        self.label = tk.Label(
+            self, text="SIGN UP", font=self.master.font_settings
+        ).grid(row=0, column=0, columnspan=2, padx=10, pady=5)
 
         # fields
         self.label = tk.Label(
@@ -170,7 +174,11 @@ class Signup(tk.Toplevel):
 
         # cancel button
         self.cancel_btn = tk.Button(
-            self, text="Cancel", font=self.master.font_settings, command=self.destroy, fg="red"
+            self,
+            text="Cancel",
+            font=self.master.font_settings,
+            command=self.destroy,
+            fg="red",
         ).grid(row=4, column=0, padx=10, pady=5)
 
         # log in button
@@ -442,9 +450,10 @@ class App(tk.Frame):
     def logout(self):
         self.clear_logged_widget()
         self.username = ""
-        self.label.pack()
-        self.login_btn.pack()
-        self.signup_btn.pack()
+        self.label.pack(padx=10, pady=5)
+        self.login_btn.pack(padx=10, pady=5)
+        self.signup_btn.pack(padx=10, pady=5)
+        self.select_cam_btn.pack(padx=10, pady=5)
 
     def store_attendance(self):
         cur = con.cursor()
