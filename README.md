@@ -47,12 +47,12 @@ This is a Python-based Face Recognition Attendance application that was made usi
 
 <h4>How it Works:</h4>
 <ul>
-  <li>Using the OpenCV library we can access our camera using VideoCapture and to something with it.</li>
+  <li>Using the OpenCV library we can access our camera using VideoCapture and do something with it.</li>
   <li>This program uses haarcascade_frontalface_default cascade from OpenCV to detect faces in the VideoCapture.</li>
   <li>First we select the region of interest of the face and we can do things with it such as save it, scan it, etc.</li>
   <li>To train the faces, first we have to save the region of interest in our local directory (I set it to <i>images/[username]/</i>) and then <i>train.py</i> will train it using OpenCV LBPHFaceRecognizer and then export it to xml file (mine <i>face-train.xml</i>).</li>
   <li>To scan the face, we have to read the <i>face-train.xml</i> file and then predict the region of interest with it. Using the LBPHFaceRecognizer prediction we can get the confidence of the prediction.</li>
-  <li>The confidence is the percentage we can get to tell that the face is recognized or not.</li>
+  <li>Confidence is the percentage we can get to tell that the face is recognized or not.</li>
   <img src="https://user-images.githubusercontent.com/69960893/147265224-aec2f66e-e5c5-4e62-b853-c0dacdc7b804.png" style="width:400px" />
 </ul>
 
